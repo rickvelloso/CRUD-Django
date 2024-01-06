@@ -1,0 +1,25 @@
+<!-- app/templates/cadastrar_usuario.html -->
+{% extends 'base.html' %}
+
+{% block title %}Cadastrar Usuário{% endblock %}
+
+{% block content %}
+    <h1>Cadastrar Usuário</h1>
+    <form method="post" action="{% url 'cadastrar_usuario' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Cadastrar</button>
+    </form>
+    <hr>
+    {% if obj %}
+        <h3>Succesfully uploaded: {{ obj.caption }}</h3>
+        <img src="{{ obj.image.url }}" alt="image" class="img-thumbnail" height="70%" width="70%">
+    {% endif %}
+    <hr>
+
+    {% for x in img %}
+        <img src="{{ x.image.url }}" height="70%" width="70%" class="img-thumbnail" alt="...">
+        <h2 class="text-center">{{ x.caption }}</h2>
+        <hr>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+<!-- templates/editar_usuario.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Editar Usuário</h2>
+    <form method="post" action="{% url 'editar_usuario' usuario_id=usuario_id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Salvar Alterações">
+    </form>
+{% endblock %}

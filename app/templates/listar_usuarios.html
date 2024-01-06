@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Lista de Usuários</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data de Nascimento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>
+                        {% if usuario.foto %}
+                            <img src="{{ usuario.foto.url }}" alt="{{ usuario.nome }}" width="50">
+                        {% else %}
+                            Sem foto
+                        {% endif %}
+                    </td>                    
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.data_nascimento }}</td>
+                    <td>
+                        <a href="{% url 'editar_usuario' usuario_id=usuario.id %}">Editar</a> |
+                        <a href="{% url 'excluir_usuario' usuario_id=usuario.id %}">Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
