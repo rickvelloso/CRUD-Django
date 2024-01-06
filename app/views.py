@@ -23,16 +23,33 @@ def excluir_usuario(request, usuario_id):
     usuario.delete()
     return redirect('listar_usuarios') 
 
+# Sua view editar_usuario
 def editar_usuario(request, usuario_id):
-    usuario = get_object_or_404(Usuario, pk=usuario_id)
+    # Obtém a instância do usuário que deseja editar
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
     if request.method == 'POST':
-        form = UsuarioForm(request.POST, instance=usuario)
+        # Preenche o formulário com os dados existentes do usuário e os novos dados da requisição
+        form = UsuarioForm(data=request.POST, files=request.FILES, instance=usuario)
+        
         if form.is_valid():
+            # Salva as alterações no usuário
             form.save()
-            return redirect('listar_usuarios') 
+            return redirect('listar_usuarios')
     else:
+        # Preenche o formulário com os dados existentes do usuário
         form = UsuarioForm(instance=usuario)
-    return render(request, 'editar_usuario.html', {'form': form, 'usuario_id': usuario_id})
+
+    # Aqui, 'obj' será a instância do usuário que está sendo editado
+    # 'img' será uma lista contendo apenas essa instância, pois você não possui uma classe de imagem separada
+    obj = usuario
+    img = [usuario]
+
+    return render(request, 'editar_usuario.html', {'form': form, 'obj': obj, 'img': img, 'usuario_id': usuario.id})
+
+
+
+
 def listar_usuarios(request):
     usuarios = Usuario.objects.all()
     return render(request, 'listar_usuarios.html', {'usuarios': usuarios})

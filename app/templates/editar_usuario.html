@@ -3,9 +3,10 @@
 
 {% block content %}
     <h2>Editar Usuário</h2>
-    <form method="post" action="{% url 'editar_usuario' usuario_id=usuario_id %}">
+    <form method="post" action="{% url 'editar_usuario' usuario_id=usuario_id %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <img src="{{ usuario.foto.url }}" height="70%" width="70%" class="img-thumbnail" alt="Imagem Atual">
         <input type="submit" value="Salvar Alterações">
     </form>
 {% endblock %}
